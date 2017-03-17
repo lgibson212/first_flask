@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sqlite3
-import wrapper
+# import wrapper
 from datetime import datetime
 
 connection = sqlite3.connect('twitter_clone.db', check_same_thread=False)
@@ -69,6 +69,16 @@ class Tweet():
         cursor.execute('''SELECT post FROM tweets;''')
         all_tweets = cursor.fetchall()
         return all_tweets
+
+
+    @classmethod
+    def priv(cls, username):
+        cursor.execute('''SELECT id FROM users WHERE username=?;''', (username,))
+        user_id = cursor.fetchone()
+        cursor.execute('''SELECT post FROM tweets WHERE user_id=?;''', (user_id[0],)) #user_id is a tuple (x,)
+        user_tweets = cursor.fetchall()
+        return user_tweets
+
 
     @classmethod
     def store_tweet(cls, post, user_id):
