@@ -14,6 +14,7 @@ app.config["SECRET_KEY"] = open("SECRET_KEY", "rb").read()
 def serve_frontpage():
     tweets = models.Tweet.publ()
     return render_template('index.html', latest_tweets=tweets)
+    #latest_tweets to be used in dynamic html
 
 # Register
 @app.route('/serve-register')
@@ -22,7 +23,9 @@ def serve_register():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    username=session['username']
+    tweets=models.Tweet.priv(username)
+    return render_template('dashboard.html', username=username, user_tweets=tweets)
 
 @app.route('/welcome')
 def welcome():
@@ -41,7 +44,7 @@ def check_credentials_register():
         flash('that username already exists, please login.')
         return serve_login()
     else:
-        return render_template('welcome.html')
+        return dashboard()
 
 # Welcome
 # @app.route('/serve-welcome')
@@ -53,6 +56,7 @@ def check_credentials_register():
 @app.route('/serve-login')
 def serve_login():
     return render_template('login.html')
+
 
 @app.route('/check-credentials-login', methods=["POST"])
 def check_credentials_login():
@@ -68,16 +72,18 @@ def check_credentials_login():
         return serve_login()
     else:
         session['username']=__username
-        return render_template('dashboard.html')
+        tweets=models.Tweet.priv(__username)
+        return dashboard()
+        # render_template('dashboard.html', user_tweets=tweets, username=__username)
 
 @app.route('/tweet', methods=["POST"])
 def tweet():
-    __tweet = request.form['twttr'] # from html form name
-    print(__tweet)
+    __tweet = request.form['twttr'] # from html form name, __tweet is a string from user form
+    # print(__tweet)
     username = session['username']
     user_id = models.User.get_id(username)
     models.Tweet.store_tweet(__tweet, user_id)
-    return render_template('dashboard.html', latest_tweet = __tweet)
+    return dashboard()
 
 
 

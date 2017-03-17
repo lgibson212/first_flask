@@ -1,10 +1,11 @@
 $(document).ready(function(){
 	console.log("Document ready");
-	$("button").on("submit", function(click)) {
+	$("#tweet").on("submit", function(event)) {
 		event.preventDefault();
+		data = $("#tweet").serialize();
 		$.ajax({
 			method:"POST",
-			url: "/check-credentials-login",
+			url: "/tweet",
 			data: data,
 			success: function(response) {
 				console.log(response);
@@ -12,3 +13,6 @@ $(document).ready(function(){
 		});
 	});
 });
+
+// form = html tag id
+// url = html action

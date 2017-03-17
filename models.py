@@ -62,7 +62,7 @@ class User():
         user_id = cursor.fetchall() #returns tuple
         return user_id[0]
 
-class Tweet():
+class Tweet:
 
     @classmethod
     def publ(cls):
@@ -76,19 +76,20 @@ class Tweet():
         cursor.execute('''SELECT id FROM users WHERE username=?;''', (username,))
         user_id = cursor.fetchone()
         cursor.execute('''SELECT post FROM tweets WHERE user_id=?;''', (user_id[0],)) #user_id is a tuple (x,)
+        
         user_tweets = cursor.fetchall()
         return user_tweets
 
 
     @classmethod
     def store_tweet(cls, post, user_id):
-        print(post, user_id)
+        # print(post, user_id)
         time=datetime.now()
         cursor.execute('''INSERT INTO tweets (postTime, post, user_id) VALUES (?, ?, ?);
         ''', (time, post, user_id[0]) 
             )
         connection.commit()
-        print("new tweet created")
+        # print("new tweet created")
         return True #cursor.lastrowid()
 
 

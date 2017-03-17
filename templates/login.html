@@ -4,7 +4,8 @@
     <title>Quick Start</title>
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script type="text/javascript" src="static/behavior.js"></script>
 </head>
 <body>
     <div class="container">
@@ -34,7 +35,7 @@
                 <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
             </div>
             <div class="col-lg-6">
-                <form action ='/check-credentials-login' method = 'POST'>
+                <form id = 'login' action ='/check-credentials-login' method = 'POST'>
                     <input name="username" type='text' placeholder="username" required autofocus>
                     <input type='password' name="password" placeholder="password" required>
                     <button type='submit'>submit</button>
